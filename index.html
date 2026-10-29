@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#000000">
+<title>PRISE ISLAND</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@800&display=swap">
+<style>
+:root{--bg:#000;--pn:#050805;--g:#00ff41;--gd:#00b82e;--gx:#0a5a1c;--r:#ff2a2a;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#000}
+body{color:var(--g);font-family:"JetBrains Mono","Courier New",ui-monospace,Menlo,monospace;font-size:16px;line-height:1.45}
+body.normal{--g:#38bdf8;--gd:#2a9ccc;--gx:#0b3b52}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,255,65,.03) 0 1px,transparent 1px 3px);z-index:50}
+#rain{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.26;pointer-events:none}
+header,nav,main{position:relative;z-index:1}
+#fps{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 74px);right:8px;z-index:60;font-size:.9rem;border:1px solid var(--gx);background:#000;padding:2px 8px;text-shadow:0 0 6px var(--g)}
+header{padding:14px 14px 10px;border-bottom:1px solid var(--gx)}
+.top{display:flex;align-items:center;gap:12px}
+.brand{font-family:Orbitron,"JetBrains Mono",sans-serif;font-weight:800;font-size:1.65rem;letter-spacing:2px;text-shadow:0 0 12px var(--g);line-height:1.05}
+.brand span{color:var(--gd);display:block;font-size:1.05rem;letter-spacing:9px;margin-top:2px}
+.prompt{font-size:.9rem;color:var(--gd);margin-top:6px}
+.cur{display:inline-block;width:8px;height:1em;background:var(--g);vertical-align:-2px;animation:b 1s steps(1) infinite}
+@keyframes b{50%{opacity:0}}
+.sub{color:var(--gd);font-size:.9rem;margin-top:10px}
+.row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.btn,.row select{border:0;background:var(--g);color:#000;font:inherit;font-weight:700;font-size:.9rem;padding:9px 12px;cursor:pointer}
+.row select{background:#000;color:var(--g);border:1px solid var(--g)}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:70;display:flex;gap:0;padding:0 0 env(safe-area-inset-bottom,0px);background:#000;border-top:1px solid var(--g);box-shadow:0 -4px 18px rgba(0,255,65,.18);overflow-x:auto}
+@keyframes f{from{opacity:0;transform:translateY(6px)}}
+.view.on{animation:f .25s ease}
+nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav button{flex:1 0 auto;min-width:54px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px 7px;background:#000;border:0;border-top:2px solid transparent;color:var(--gd);font:inherit;font-size:.66rem;cursor:pointer}
+nav button.on{color:var(--g);border-top-color:var(--g);background:rgba(0,255,65,.08);text-shadow:0 0 8px var(--g);font-weight:700}
+main{max-width:560px;margin:0 auto;padding:14px 14px 96px}
+.view{display:none}.view.on{display:block}
+.mode{display:flex;gap:6px;margin-bottom:6px}
+.mode button{flex:1;padding:11px 4px;background:#000;border:1px solid var(--gx);color:var(--gd);font:inherit;font-size:.9rem;cursor:pointer}
+.mode button.on{border-color:var(--g);color:var(--g);box-shadow:0 0 10px var(--g)}
+.hero{text-align:center;margin:5vh 0 16px}
+.hero .t{font-family:Orbitron,"JetBrains Mono",sans-serif;font-size:2.2rem;font-weight:800;text-shadow:0 0 14px var(--g)}
+.hero p{color:var(--gd);margin:6px 0 0;font-size:.95rem}
+.bar{display:flex;border:1px solid var(--g);box-shadow:0 0 14px rgba(0,255,65,.3);background:#000}
+.bar span{padding:15px 0 0 10px}
+.bar input{flex:1;min-width:0;border:0;background:transparent;color:var(--g);font:inherit;font-size:1.15rem;padding:14px 8px;outline:0;caret-color:var(--g)}
+.bar input::placeholder{color:var(--gx)}
+.bar button{border:0;background:var(--g);color:#000;font:inherit;font-weight:700;padding:0 16px;cursor:pointer}
+.eng{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:14px 0}
+.eng label{cursor:pointer}.eng input{display:none}
+.eng span{display:inline-block;padding:8px 12px;border:1px solid var(--gx);color:var(--gd);font-size:.92rem}
+.eng input:checked+span{border-color:var(--g);color:var(--g);box-shadow:0 0 8px rgba(0,255,65,.4)}
+.card{border:1px solid var(--gx);background:var(--pn);padding:13px;margin-bottom:10px}
+.card h3{margin:0 0 6px;font-size:1.05rem;letter-spacing:.5px}
+.card p{margin:0 0 10px;color:var(--gd);font-size:.92rem}
+.card a{display:inline-block;padding:9px 14px;border:1px solid var(--g);color:var(--g);text-decoration:none;font-size:.92rem}
+.warn{border-color:var(--r)}.warn h3{color:var(--r)}.warn p{color:#ff8a8a;margin:0}
+textarea,.card input[type=text]{width:100%;background:#000;border:1px solid var(--gx);color:var(--g);font:inherit;padding:8px;margin-bottom:6px;outline:0}
+.out{word-break:break-all;border:1px dashed var(--gx);padding:8px;min-height:40px;font-size:.95rem;margin:6px 0}
+input[type=range]{width:100%;accent-color:var(--g)}
+.hint{color:var(--gd);font-size:.85rem;text-align:center}
+.rc{background:#000;border:1px solid var(--gx);color:var(--gd);font:inherit;font-size:.88rem;margin:3px;padding:6px 10px;cursor:pointer}
+#notepad{min-height:220px}
+body.noscan::after{display:none}
+#gate{position:fixed;inset:0;z-index:200;background:#000;display:flex;justify-content:center;overflow:auto;padding:calc(env(safe-area-inset-top,0px) + 16px) 16px 24px}
+.gbox{width:100%;max-width:420px;margin:auto;text-align:center}
+#glogo svg{width:160px;height:160px;filter:drop-shadow(0 0 14px var(--g));margin-bottom:14px}
+#gate input[type=password]{width:100%;background:#000;border:1px solid var(--g);color:var(--g);font:inherit;font-size:1.15rem;padding:13px;margin-bottom:8px;outline:0;text-align:center;letter-spacing:3px}
+#gate .card{text-align:left;margin-top:14px}
+#gate select{margin:12px 0 8px;background:#000;color:var(--g);border:1px solid var(--g);font:inherit;padding:8px}
+.btn2{margin:4px 6px 0 0}
+</style>
+</head>
+<body>
+<div id="fps">FPS: --</div>
+<canvas id="rain"></canvas>
+<div id="gate"><div class="gbox">
+<div id="glogo"></div>
+<input type="password" id="gcode" data-p="g_ph" autocomplete="off" autocapitalize="off" spellcheck="false">
+<button class="btn" id="gbtn" data-i="g_b" style="width:100%"></button>
+<div class="hint" id="gmsg" style="min-height:1.5em;margin:8px 0"></div>
+<div class="card"><h3 data-i="g_ct"></h3><p data-i="g_cd"></p>
+<input type="password" id="ncode" data-p="g_nph" autocomplete="new-password" autocapitalize="off" spellcheck="false">
+<button class="btn btn2" id="gnew" data-i="g_cb"></button></div>
+<select id="lang2" aria-label="Language"><option value="tr">🇹🇷 Türkçe</option><option value="en">🇬🇧 English</option><option value="de">🇩🇪 Deutsch</option><option value="fr">🇫🇷 Français</option><option value="es">🇪🇸 Español</option><option value="ru">🇷🇺 Русский</option></select>
+<div class="hint" data-i="g_note"></div>
+</div></div>
+<header>
+<div class="top">
+<svg width="76" height="76" viewBox="0 0 100 100" style="color:var(--g);flex:none" role="img" aria-label="Prise Island">
+<defs><clipPath id="cc"><circle cx="50" cy="50" r="45"/></clipPath></defs>
+<circle cx="50" cy="50" r="47" fill="#000" stroke="currentColor" stroke-width="2"/>
+<circle cx="50" cy="50" r="43" fill="none" stroke="currentColor" stroke-width=".8" stroke-dasharray="2 3"/>
+<g clip-path="url(#cc)">
+<path d="M8 100L14 82Q24 73 38 71L50 84L62 71Q76 73 86 82L92 100Z" fill="#000" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M38 71L50 90L62 71" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+<ellipse cx="21" cy="81" rx="9" ry="4" fill="currentColor"/><ellipse cx="79" cy="81" rx="9" ry="4" fill="currentColor"/>
+<path d="M26 77L70 100M74 77L30 100" stroke="currentColor" stroke-width="3"/>
+<rect x="46" y="90" width="8" height="8" fill="#000" stroke="currentColor" stroke-width="2"/>
+</g>
+<path d="M43 64v8M57 64v8" stroke="currentColor" stroke-width="2.5"/>
+<path d="M31 34Q50 27 69 34Q72 56 60 66Q50 71 40 66Q28 56 31 34Z" fill="#000" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M34 50Q36 58 42 62M66 50Q64 58 58 62" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".6"/>
+<path d="M35 37L46 40M65 37L54 40" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M36 43Q41 38 46 44Q41 48 36 43ZM64 43Q59 38 54 44Q59 48 64 43Z" fill="currentColor"/>
+<path d="M50 54Q42 49 33 53Q38 58 50 56Q62 58 67 53Q58 49 50 54Z" fill="currentColor"/>
+<path d="M38 61Q50 68 62 61" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<path d="M44 63.5v3M50 64.5v3M56 63.5v3" stroke="currentColor" stroke-width="1.5"/>
+<path d="M46 68L50 75L54 68Z" fill="currentColor"/>
+<path d="M12 35L50 8L88 35L73 37Q50 27 27 37Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+<path d="M27 37Q50 27 73 37" fill="none" stroke="#000" stroke-width="1.5"/>
+<circle cx="50" cy="20" r="4.5" fill="#000"/>
+<path d="M46 26L54 31M54 26L46 31" stroke="#000" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="48.5" cy="19.5" r="1" fill="currentColor"/><circle cx="51.5" cy="19.5" r="1" fill="currentColor"/>
+</svg>
+<div><div class="brand">PRISE<span>ISLAND</span></div><div class="prompt">root@prise-island:~$ <span id="typed"></span><span class="cur"></span></div></div>
+</div>
+<div class="sub">&gt; <span id="stat"></span> // <span id="clock"></span></div>
+<div class="row">
+<button class="btn" id="panic" style="background:var(--r);color:#fff" data-i="panic"></button>
+<button class="btn" id="rainbtn"></button>
+<button class="btn" id="lockbtn">🔒</button>
+<select id="lang" aria-label="Language">
+<option value="tr">🇹🇷 Türkçe</option><option value="en">🇬🇧 English</option><option value="de">🇩🇪 Deutsch</option><option value="fr">🇫🇷 Français</option><option value="es">🇪🇸 Español</option><option value="ru">🇷🇺 Русский</option>
+</select>
+</div>
+</header>
+<nav>
+<button class="on" data-v="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16l5 5"/></svg><span data-i="ts"></span></button>
+<button data-v="tools"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span data-i="tt"></span></button>
+<button data-v="vpn"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg><span>VPN</span></button>
+<button data-v="img"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="9" cy="10" r="1.5"/><path d="M3 17l5-4 4 3 3-2 6 4"/></svg><span data-i="ti"></span></button>
+<button data-v="notes"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7"/></svg><span data-i="tn"></span></button>
+<button data-v="info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span data-i="tb"></span></button>
+<button data-v="adm" id="admtab" style="display:none"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M7 10l3 2-3 2M12 15h5"/></svg><span data-i="tadm"></span></button>
+</nav>
+<main>
+<section class="view on" id="search">
+<div class="mode"><button id="mg" class="on" data-i="mg"></button><button id="mn" data-i="mn"></button></div>
+<div class="hero"><div class="t" id="ht">DuckDuckGo</div><p id="hp"></p></div>
+<div class="bar"><span>&gt;</span><input type="text" id="q" data-p="ph" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus><button id="go" data-i="go"></button></div>
+<div class="eng" id="engg">
+<label><input type="radio" name="e" value="https://duckduckgo.com/?q=" checked><span>DuckDuckGo</span></label>
+<label><input type="radio" name="e" value="https://duckduckgo.com/html/?q="><span>DDG Lite</span></label>
+<label><input type="radio" name="e" value="https://www.startpage.com/do/search?q="><span>Startpage</span></label>
+<label><input type="radio" name="e" value="https://search.brave.com/search?q="><span>Brave</span></label>
+<label><input type="radio" name="e" value="https://www.mojeek.com/search?q="><span>Mojeek</span></label>
+<label><input type="radio" name="e" value="https://www.qwant.com/?q="><span>Qwant</span></label>
+<label><input type="radio" name="e" value="https://swisscows.com/en/web?query="><span>Swisscows</span></label>
+</div>
+<div class="eng" id="engn" style="display:none">
+<label><input type="radio" name="n" value="https://www.google.com/search?q=" checked><span>Google</span></label>
+<label><input type="radio" name="n" value="https://www.bing.com/search?q="><span>Bing</span></label>
+<label><input type="radio" name="n" value="https://yandex.com/search/?text="><span>Yandex</span></label>
+<label><input type="radio" name="n" value="https://www.youtube.com/results?search_query="><span>YouTube</span></label>
+<label><input type="radio" name="n" value="https://search.yahoo.com/search?p="><span>Yahoo</span></label>
+<label><input type="radio" name="n" value="https://www.ecosia.org/search?q="><span>Ecosia</span></label>
+<label><input type="radio" name="n" value="https://en.wikipedia.org/w/index.php?search="><span>Wikipedia</span></label>
+</div>
+<div class="hint" id="recent"></div>
+<div class="hint" id="hint"></div>
+</section>
+
+<section class="view" id="tools">
+<div class="card"><h3 data-i="pwt"></h3><p data-i="pwd"></p>
+<input type="range" id="plen" min="8" max="64" value="20"><div class="hint" id="plabel"></div>
+<div class="out" id="pout">-</div>
+<button class="btn btn2" id="pgen" data-i="gen"></button><button class="btn btn2" id="pcopy" data-i="cp"></button></div>
+<div class="card"><h3 data-i="hat"></h3><p data-i="had"></p>
+<textarea id="hin" rows="2" data-p="txt"></textarea><div class="out" id="hout">-</div>
+<button class="btn btn2" id="hgo" data-i="calc"></button></div>
+<div class="card"><h3>[ BASE64 ]</h3>
+<textarea id="bin" rows="2" data-p="txt"></textarea><div class="out" id="bout">-</div>
+<button class="btn btn2" id="benc" data-i="enc"></button><button class="btn btn2" id="bdec" data-i="dec"></button></div>
+<div class="card"><h3 data-i="lt"></h3><p data-i="ld"></p>
+<textarea id="lin" rows="2" placeholder="https://..."></textarea><div class="out" id="lout">-</div>
+<button class="btn btn2" id="lgo" data-i="cl"></button></div>
+<div class="card"><h3 data-i="ut"></h3><p data-i="ud"></p>
+<div class="out" id="uout">-</div><button class="btn btn2" id="ugo" data-i="gen"></button></div>
+</section>
+
+<section class="view" id="vpn">
+<div class="card warn"><h3 data-i="wt"></h3><p data-i="wd"></p></div>
+<div class="card"><h3>Proton VPN</h3><p data-i="v1"></p><a href="https://protonvpn.com" target="_blank" rel="noopener noreferrer" data-i="open"></a></div>
+<div class="card"><h3>Mullvad VPN</h3><p data-i="v2"></p><a href="https://mullvad.net" target="_blank" rel="noopener noreferrer" data-i="open"></a></div>
+<div class="card"><h3>Tor Browser</h3><p data-i="v3"></p><a href="https://www.torproject.org" target="_blank" rel="noopener noreferrer" data-i="open"></a></div>
+<div class="card"><h3 data-i="lk"></h3><p data-i="v4"></p><a href="https://ipleak.net" target="_blank" rel="noopener noreferrer" data-i="test"></a></div>
+</section>
+
+<section class="view" id="img">
+<div class="card warn"><h3 data-i="it"></h3><p data-i="idd"></p></div>
+<div class="card"><h3>Google Lens</h3><p data-i="i1"></p><a href="https://lens.google.com/" target="_blank" rel="noopener noreferrer" data-i="open"></a></div>
+<div class="card"><h3>TinEye</h3><p data-i="i2"></p><a href="https://tineye.com/" target="_blank" rel="noopener noreferrer" data-i="open"></a></div>
+<div class="card"><h3>Bing Visual Search</h3><p data-i="i3"></p><a href="https://www.bing.com/visualsearch" target="_blank" rel="noopener noreferrer" data-i="open"></a></div>
+</section>
+
+<section class="view" id="notes">
+<div class="card warn"><h3 data-i="nt"></h3><p data-i="nd"></p></div>
+<textarea id="notepad" rows="10" data-p="nph"></textarea>
+<button class="btn btn2" id="nclr" data-i="nc"></button>
+</section>
+
+<section class="view" id="info">
+<div class="card"><h3 data-i="ab_t"></h3><p data-i="ab_d"></p><div class="hint" style="text-align:left">PRISE ISLAND · v1.0</div></div>
+</section>
+
+<section class="view" id="adm">
+<div class="card warn"><h3 data-i="ad_t"></h3><p data-i="ad_n"></p></div>
+<div class="card"><div class="out"><span data-i="ad_s"></span>: <b id="ast">0</b><br><span data-i="ad_u"></span>: <b id="aup">0</b> s</div>
+<div class="out"><span data-i="ad_sys"></span>:<br><span id="asys"></span></div>
+<button class="btn btn2" id="tfps">FPS</button><button class="btn btn2" id="tscan">SCANLINE</button><button class="btn btn2" id="tspd">MATRIX ⚡</button><button class="btn btn2" id="alock" data-i="ad_o"></button></div>
+</section>
+</main>
+<script>
+var $=function(i){return document.getElementById(i)};
+var D={
+tr:{ts:"ARA",tt:"ARAÇ",ti:"GÖRSEL",tn:"NOT",mg:"🕶 GİZLİ ARAMA",mn:"🌐 NORMAL ARAMA",hpg:"// seni takip etmeyen arama",hpn:"// normal mod: son aramalar hafızada tutulur",ph:"ara veya !b !s !d yaz...",hint:"kısayol: !d DuckDuckGo · !s Startpage · !b Brave · !m Mojeek · !g Google · !y Yandex<br>gizli modda geçmiş yok · çerez yok · referrer yok",sg:"izsiz mod aktif",sn:"normal mod",panic:"☠ PANİK",rg:"MATRIX: AÇIK",rk:"MATRIX: KAPALI",go:"ARA",pwt:"[ ŞİFRE ÜRETİCİ ]",pwd:"Güvenli rastgele üretilir, hiçbir yere gönderilmez.",len:"uzunluk",gen:"ÜRET",cp:"KOPYALA",cpd:"KOPYALANDI",hat:"[ SHA-256 HASH ]",had:"Metnin hash’ini cihazında hesaplar.",txt:"metin...",calc:"HESAPLA",enc:"ŞİFRELE",dec:"ÇÖZ",lt:"[ LİNK TEMİZLEYİCİ ]",ld:"Linkteki takip parametrelerini (utm, fbclid, gclid...) siler.",cl:"TEMİZLE",ut:"[ KULLANICI ADI ÜRETİCİ ]",ud:"Gerçek adınla ilgisi olmayan rastgele takma ad.",wt:"[ UYARI ]",wd:"Web sayfası VPN olamaz, IP’ni değiştiremez. Sahte “bağlandı” göstergesi koymuyorum. Gerçek koruma için uygulama kur.",v1:"Ücretsiz plan, reklamsız, log tutmaz.",v2:"Hesap istemez, anonim ödeme. Ücretli.",v3:"En güçlü anonimlik, 3 katmanlı yönlendirme.",v4:"VPN bağlıyken IP ve DNS kontrol et.",open:"> AÇ",test:"> TEST ET",lk:"Sızıntı testi",it:"[ TERS GÖRSEL ARAMA ]",idd:"Fotoğrafın internette nerede kullanıldığını bulur. Kendi fotoğrafın ve sahte profil kontrolü için. Başkasını izlemek için kullanma.",i1:"Aynı ve benzer görselleri bulur.",i2:"Görselin ilk yayın yerini gösterir.",i3:"Web’deki eşleşmeleri gösterir.",nt:"[ GİZLİ NOT DEFTERİ ]",nd:"Notlar sadece cihazın hafızasında durur. Sayfa kapanınca veya PANİK’e basınca silinir.",nph:"> yaz...",nc:"NOTU SİL",eb:"hata",el:"geçersiz link",e64:"geçersiz base64",tb:"BİLGİ",ab_t:"[ UYGULAMA HAKKINDA ]",ab_d:"Prise Island, takip ve reklamdan uzak, hızlı ve sade bir arama kapısı olarak doğdu. Amaç: gizli arama, temel gizlilik araçları ve dürüst bilgiyi tek yerde toplamak. Hesap istemez, veri toplamaz. Bu bir VPN değildir; gerçek koruma için VPN veya Tor kullan.",cd_t:"[ KOD GİR ]",cd_d:"Özel bir kodun varsa buraya yaz.",cd_ph:"kod...",cd_b:"AÇ",cd_ok:"✔ Yönetici modu açıldı",cd_no:"✘ Geçersiz kod",ad_t:"[ YÖNETİCİ PANELİ ]",ad_n:"Bu panel sadece kendi cihazındaki görünümü ve ayarları değiştirir. Sunucu yoktur.",ad_s:"Arama sayısı",ad_u:"Açık kalma süresi",ad_o:"ÇIKIŞ",ad_sys:"Cihaz bilgisi",tadm:"ADMİN",g_ph:"kod gir...",g_b:"GİRİŞ",g_ct:"[ KOD OLUŞTUR ]",g_cd:"İlk kez mi giriyorsun? Kendi giriş kodunu belirle (en az 4 karakter).",g_nph:"yeni kod...",g_cb:"OLUŞTUR",g_err:"✘ Hatalı kod",g_short:"✘ En az 4 karakter",g_saved:"✔ Kod kaydedildi",g_note:"Bu kilit sadece ekranı gizler, gerçek güvenlik değildir."},
+en:{ts:"SEARCH",tt:"TOOLS",ti:"IMAGE",tn:"NOTE",mg:"🕶 PRIVATE SEARCH",mn:"🌐 NORMAL SEARCH",hpg:"// search that doesn’t track you",hpn:"// normal mode: recent searches kept in memory",ph:"search or type !b !s !d...",hint:"shortcuts: !d DuckDuckGo · !s Startpage · !b Brave · !m Mojeek · !g Google · !y Yandex<br>private mode: no history · no cookies · no referrer",sg:"stealth mode on",sn:"normal mode",panic:"☠ PANIC",rg:"MATRIX: ON",rk:"MATRIX: OFF",go:"GO",pwt:"[ PASSWORD GENERATOR ]",pwd:"Generated securely at random, never sent anywhere.",len:"length",gen:"GENERATE",cp:"COPY",cpd:"COPIED",hat:"[ SHA-256 HASH ]",had:"Computes the text’s hash on your device.",txt:"text...",calc:"COMPUTE",enc:"ENCODE",dec:"DECODE",lt:"[ LINK CLEANER ]",ld:"Removes tracking parameters (utm, fbclid, gclid...) from a link.",cl:"CLEAN",ut:"[ USERNAME GENERATOR ]",ud:"A random alias unrelated to your real name.",wt:"[ WARNING ]",wd:"A web page can’t be a VPN or change your IP. I don’t show a fake “connected” badge. Install an app for real protection.",v1:"Free plan, no ads, no logs.",v2:"No account needed, anonymous payment. Paid.",v3:"Strongest anonymity, 3-layer routing.",v4:"Check your IP and DNS while the VPN is on.",open:"> OPEN",test:"> RUN TEST",lk:"Leak test",it:"[ REVERSE IMAGE SEARCH ]",idd:"Finds where a photo is used online. For your own photos and fake-profile checks. Don’t use it to track others.",i1:"Finds identical and similar images.",i2:"Shows where an image was first published.",i3:"Shows matches across the web.",nt:"[ PRIVATE NOTEPAD ]",nd:"Notes live only in device memory. Erased when you close the page or hit PANIC.",nph:"> type...",nc:"DELETE NOTE",eb:"error",el:"invalid link",e64:"invalid base64",tb:"INFO",ab_t:"[ ABOUT THE APP ]",ab_d:"Prise Island was born as a fast, simple search gateway free from tracking and ads. The goal: private search, basic privacy tools and honest information in one place. No account, no data collection. This is not a VPN; use a VPN or Tor for real protection.",cd_t:"[ ENTER CODE ]",cd_d:"If you have a special code, type it here.",cd_ph:"code...",cd_b:"UNLOCK",cd_ok:"✔ Admin mode unlocked",cd_no:"✘ Invalid code",ad_t:"[ ADMIN PANEL ]",ad_n:"This panel only changes looks and settings on your own device. There is no server.",ad_s:"Searches",ad_u:"Uptime",ad_o:"LOG OUT",ad_sys:"Device info",tadm:"ADMIN",g_ph:"enter code...",g_b:"ENTER",g_ct:"[ CREATE CODE ]",g_cd:"First time here? Set your own access code (at least 4 characters).",g_nph:"new code...",g_cb:"CREATE",g_err:"✘ Wrong code",g_short:"✘ At least 4 characters",g_saved:"✔ Code saved",g_note:"This lock only hides the screen; it is not real security."},
+de:{ts:"SUCHE",tt:"TOOLS",ti:"BILD",tn:"NOTIZ",mg:"🕶 PRIVATE SUCHE",mn:"🌐 NORMALE SUCHE",hpg:"// Suche ohne Tracking",hpn:"// Normalmodus: letzte Suchen im Speicher",ph:"suchen oder !b !s !d tippen...",hint:"Kürzel: !d DuckDuckGo · !s Startpage · !b Brave · !m Mojeek · !g Google · !y Yandex<br>privat: kein Verlauf · keine Cookies · kein Referrer",sg:"Tarnmodus aktiv",sn:"Normalmodus",panic:"☠ PANIK",rg:"MATRIX: AN",rk:"MATRIX: AUS",go:"LOS",pwt:"[ PASSWORT-GENERATOR ]",pwd:"Sicher zufällig erzeugt, nirgendwohin gesendet.",len:"Länge",gen:"ERZEUGEN",cp:"KOPIEREN",cpd:"KOPIERT",hat:"[ SHA-256-HASH ]",had:"Berechnet den Hash lokal auf deinem Gerät.",txt:"Text...",calc:"BERECHNEN",enc:"KODIEREN",dec:"DEKODIEREN",lt:"[ LINK-REINIGER ]",ld:"Entfernt Tracking-Parameter (utm, fbclid, gclid...) aus Links.",cl:"REINIGEN",ut:"[ NUTZERNAMEN-GENERATOR ]",ud:"Zufälliger Alias ohne Bezug zu deinem echten Namen.",wt:"[ WARNUNG ]",wd:"Eine Webseite kann kein VPN sein und deine IP nicht ändern. Ich zeige keine falsche „Verbunden“-Anzeige. Für echten Schutz installiere eine App.",v1:"Gratis-Tarif, werbefrei, keine Logs.",v2:"Kein Konto nötig, anonyme Zahlung. Kostenpflichtig.",v3:"Stärkste Anonymität, 3-fach-Routing.",v4:"IP und DNS prüfen, während das VPN aktiv ist.",open:"> ÖFFNEN",test:"> TESTEN",lk:"Leak-Test",it:"[ UMGEKEHRTE BILDERSUCHE ]",idd:"Findet, wo ein Foto online verwendet wird. Für eigene Fotos und Fake-Profil-Checks. Nicht zum Verfolgen anderer nutzen.",i1:"Findet identische und ähnliche Bilder.",i2:"Zeigt, wo ein Bild zuerst erschien.",i3:"Zeigt Treffer im Web.",nt:"[ PRIVATES NOTIZBUCH ]",nd:"Notizen bleiben nur im Gerätespeicher. Weg beim Schließen oder bei PANIK.",nph:"> schreiben...",nc:"NOTIZ LÖSCHEN",eb:"Fehler",el:"ungültiger Link",e64:"ungültiges Base64",tb:"INFO",ab_t:"[ ÜBER DIE APP ]",ab_d:"Prise Island entstand als schnelles, schlichtes Suchportal ohne Tracking und Werbung. Ziel: private Suche, grundlegende Datenschutz-Tools und ehrliche Infos an einem Ort. Kein Konto, keine Datensammlung. Dies ist kein VPN; für echten Schutz nutze VPN oder Tor.",cd_t:"[ CODE EINGEBEN ]",cd_d:"Wenn du einen speziellen Code hast, gib ihn hier ein.",cd_ph:"Code...",cd_b:"ÖFFNEN",cd_ok:"✔ Admin-Modus freigeschaltet",cd_no:"✘ Ungültiger Code",ad_t:"[ ADMIN-PANEL ]",ad_n:"Dieses Panel ändert nur Optik und Einstellungen auf deinem Gerät. Es gibt keinen Server.",ad_s:"Suchen",ad_u:"Laufzeit",ad_o:"ABMELDEN",ad_sys:"Geräteinfo",tadm:"ADMIN",g_ph:"Code eingeben...",g_b:"EINTRETEN",g_ct:"[ CODE ERSTELLEN ]",g_cd:"Zum ersten Mal hier? Lege deinen eigenen Zugangscode fest (mind. 4 Zeichen).",g_nph:"neuer Code...",g_cb:"ERSTELLEN",g_err:"✘ Falscher Code",g_short:"✘ Mindestens 4 Zeichen",g_saved:"✔ Code gespeichert",g_note:"Diese Sperre verbirgt nur den Bildschirm; sie ist keine echte Sicherheit."},
+fr:{ts:"CHERCHER",tt:"OUTILS",ti:"IMAGE",tn:"NOTE",mg:"🕶 RECHERCHE PRIVÉE",mn:"🌐 RECHERCHE NORMALE",hpg:"// recherche sans pistage",hpn:"// mode normal : recherches récentes en mémoire",ph:"chercher ou taper !b !s !d...",hint:"raccourcis : !d DuckDuckGo · !s Startpage · !b Brave · !m Mojeek · !g Google · !y Yandex<br>mode privé : pas d’historique · pas de cookies · pas de referrer",sg:"mode furtif actif",sn:"mode normal",panic:"☠ PANIQUE",rg:"MATRIX : OUI",rk:"MATRIX : NON",go:"OK",pwt:"[ GÉNÉRATEUR DE MOT DE PASSE ]",pwd:"Généré de façon aléatoire et sûre, rien n’est envoyé.",len:"longueur",gen:"GÉNÉRER",cp:"COPIER",cpd:"COPIÉ",hat:"[ HASH SHA-256 ]",had:"Calcule le hash du texte sur ton appareil.",txt:"texte...",calc:"CALCULER",enc:"ENCODER",dec:"DÉCODER",lt:"[ NETTOYEUR DE LIENS ]",ld:"Supprime les paramètres de suivi (utm, fbclid, gclid...) d’un lien.",cl:"NETTOYER",ut:"[ GÉNÉRATEUR DE PSEUDO ]",ud:"Un pseudo aléatoire sans lien avec ton vrai nom.",wt:"[ AVERTISSEMENT ]",wd:"Une page web ne peut pas être un VPN ni changer ton IP. Je n’affiche pas de faux « connecté ». Pour une vraie protection, installe une application.",v1:"Offre gratuite, sans pub, sans logs.",v2:"Sans compte, paiement anonyme. Payant.",v3:"Anonymat maximal, routage en 3 couches.",v4:"Vérifie ton IP et ton DNS avec le VPN actif.",open:"> OUVRIR",test:"> TESTER",lk:"Test de fuite",it:"[ RECHERCHE D’IMAGE INVERSÉE ]",idd:"Trouve où une photo est utilisée en ligne. Pour tes propres photos et vérifier un faux profil. Ne l’utilise pas pour traquer quelqu’un.",i1:"Trouve les images identiques et similaires.",i2:"Montre où l’image a été publiée en premier.",i3:"Montre les correspondances sur le web.",nt:"[ BLOC-NOTES PRIVÉ ]",nd:"Les notes restent en mémoire de l’appareil. Effacées à la fermeture ou avec PANIQUE.",nph:"> écrire...",nc:"EFFACER LA NOTE",eb:"erreur",el:"lien invalide",e64:"base64 invalide",tb:"INFO",ab_t:"[ À PROPOS ]",ab_d:"Prise Island est né comme une porte de recherche rapide et simple, sans pistage ni pub. Objectif : recherche privée, outils de confidentialité de base et information honnête au même endroit. Pas de compte, pas de collecte. Ce n’est pas un VPN ; pour une vraie protection, utilise un VPN ou Tor.",cd_t:"[ ENTRER UN CODE ]",cd_d:"Si tu as un code spécial, saisis-le ici.",cd_ph:"code...",cd_b:"DÉVERROUILLER",cd_ok:"✔ Mode admin activé",cd_no:"✘ Code invalide",ad_t:"[ PANNEAU ADMIN ]",ad_n:"Ce panneau ne change que l’apparence et les réglages sur ton appareil. Il n’y a pas de serveur.",ad_s:"Recherches",ad_u:"Durée active",ad_o:"QUITTER",ad_sys:"Infos appareil",tadm:"ADMIN",g_ph:"saisir le code...",g_b:"ENTRER",g_ct:"[ CRÉER UN CODE ]",g_cd:"Première visite ? Définis ton propre code d’accès (4 caractères minimum).",g_nph:"nouveau code...",g_cb:"CRÉER",g_err:"✘ Code incorrect",g_short:"✘ 4 caractères minimum",g_saved:"✔ Code enregistré",g_note:"Ce verrou masque seulement l’écran ; ce n’est pas une vraie sécurité."},
+es:{ts:"BUSCAR",tt:"HERRAM.",ti:"IMAGEN",tn:"NOTA",mg:"🕶 BÚSQUEDA PRIVADA",mn:"🌐 BÚSQUEDA NORMAL",hpg:"// búsqueda sin rastreo",hpn:"// modo normal: búsquedas recientes en memoria",ph:"busca o escribe !b !s !d...",hint:"atajos: !d DuckDuckGo · !s Startpage · !b Brave · !m Mojeek · !g Google · !y Yandex<br>modo privado: sin historial · sin cookies · sin referrer",sg:"modo sigilo activo",sn:"modo normal",panic:"☠ PÁNICO",rg:"MATRIX: SÍ",rk:"MATRIX: NO",go:"IR",pwt:"[ GENERADOR DE CONTRASEÑAS ]",pwd:"Se genera de forma aleatoria y segura, no se envía a ningún sitio.",len:"longitud",gen:"GENERAR",cp:"COPIAR",cpd:"COPIADO",hat:"[ HASH SHA-256 ]",had:"Calcula el hash del texto en tu dispositivo.",txt:"texto...",calc:"CALCULAR",enc:"CODIFICAR",dec:"DECODIFICAR",lt:"[ LIMPIADOR DE ENLACES ]",ld:"Quita los parámetros de rastreo (utm, fbclid, gclid...) de un enlace.",cl:"LIMPIAR",ut:"[ GENERADOR DE ALIAS ]",ud:"Un alias aleatorio sin relación con tu nombre real.",wt:"[ AVISO ]",wd:"Una página web no puede ser una VPN ni cambiar tu IP. No muestro un falso «conectado». Para protección real, instala una app.",v1:"Plan gratis, sin anuncios, sin registros.",v2:"Sin cuenta, pago anónimo. De pago.",v3:"Máximo anonimato, enrutado en 3 capas.",v4:"Comprueba tu IP y DNS con la VPN activa.",open:"> ABRIR",test:"> PROBAR",lk:"Prueba de fugas",it:"[ BÚSQUEDA INVERSA DE IMÁGENES ]",idd:"Encuentra dónde se usa una foto en internet. Para tus fotos y para comprobar perfiles falsos. No lo uses para rastrear a otros.",i1:"Encuentra imágenes idénticas y similares.",i2:"Muestra dónde se publicó primero una imagen.",i3:"Muestra coincidencias en la web.",nt:"[ BLOC DE NOTAS PRIVADO ]",nd:"Las notas solo viven en la memoria del dispositivo. Se borran al cerrar o con PÁNICO.",nph:"> escribe...",nc:"BORRAR NOTA",eb:"error",el:"enlace no válido",e64:"base64 no válido",tb:"INFO",ab_t:"[ ACERCA DE LA APP ]",ab_d:"Prise Island nació como una puerta de búsqueda rápida y sencilla, sin rastreo ni anuncios. Objetivo: búsqueda privada, herramientas básicas de privacidad e información honesta en un solo lugar. Sin cuenta, sin recopilar datos. No es una VPN; para protección real usa una VPN o Tor.",cd_t:"[ INTRODUCIR CÓDIGO ]",cd_d:"Si tienes un código especial, escríbelo aquí.",cd_ph:"código...",cd_b:"DESBLOQUEAR",cd_ok:"✔ Modo admin activado",cd_no:"✘ Código no válido",ad_t:"[ PANEL ADMIN ]",ad_n:"Este panel solo cambia el aspecto y los ajustes en tu dispositivo. No hay servidor.",ad_s:"Búsquedas",ad_u:"Tiempo activo",ad_o:"SALIR",ad_sys:"Info del dispositivo",tadm:"ADMIN",g_ph:"introduce el código...",g_b:"ENTRAR",g_ct:"[ CREAR CÓDIGO ]",g_cd:"¿Primera vez? Define tu propio código de acceso (mínimo 4 caracteres).",g_nph:"nuevo código...",g_cb:"CREAR",g_err:"✘ Código incorrecto",g_short:"✘ Mínimo 4 caracteres",g_saved:"✔ Código guardado",g_note:"Este bloqueo solo oculta la pantalla; no es seguridad real."},
+ru:{ts:"ПОИСК",tt:"УТИЛИТЫ",ti:"ФОТО",tn:"ЗАМЕТКА",mg:"🕶 ПРИВАТНЫЙ ПОИСК",mn:"🌐 ОБЫЧНЫЙ ПОИСК",hpg:"// поиск без слежки",hpn:"// обычный режим: запросы хранятся в памяти",ph:"ищи или введи !b !s !d...",hint:"команды: !d DuckDuckGo · !s Startpage · !b Brave · !m Mojeek · !g Google · !y Yandex<br>приват: без истории · без cookie · без referrer",sg:"скрытый режим",sn:"обычный режим",panic:"☠ ПАНИКА",rg:"MATRIX: ВКЛ",rk:"MATRIX: ВЫКЛ",go:"НАЙТИ",pwt:"[ ГЕНЕРАТОР ПАРОЛЕЙ ]",pwd:"Создаётся безопасно и случайно, никуда не отправляется.",len:"длина",gen:"СОЗДАТЬ",cp:"КОПИЯ",cpd:"ГОТОВО",hat:"[ ХЕШ SHA-256 ]",had:"Считает хеш текста на твоём устройстве.",txt:"текст...",calc:"ПОСЧИТАТЬ",enc:"КОДИРОВАТЬ",dec:"ДЕКОДИРОВАТЬ",lt:"[ ОЧИСТКА ССЫЛОК ]",ld:"Удаляет параметры слежки (utm, fbclid, gclid...) из ссылки.",cl:"ОЧИСТИТЬ",ut:"[ ГЕНЕРАТОР НИКОВ ]",ud:"Случайный ник, не связанный с твоим именем.",wt:"[ ВНИМАНИЕ ]",wd:"Веб-страница не может быть VPN и менять твой IP. Фальшивый значок «подключено» я не ставлю. Для настоящей защиты установи приложение.",v1:"Бесплатный тариф, без рекламы, без логов.",v2:"Без аккаунта, анонимная оплата. Платный.",v3:"Максимальная анонимность, 3 уровня маршрутизации.",v4:"Проверь IP и DNS при включённом VPN.",open:"> ОТКРЫТЬ",test:"> ПРОВЕРИТЬ",lk:"Тест утечек",it:"[ ОБРАТНЫЙ ПОИСК ПО ФОТО ]",idd:"Находит, где фото используется в сети. Для своих фото и проверки фейковых профилей. Не используй для слежки за людьми.",i1:"Находит одинаковые и похожие изображения.",i2:"Показывает, где изображение появилось впервые.",i3:"Показывает совпадения в интернете.",nt:"[ ПРИВАТНЫЕ ЗАМЕТКИ ]",nd:"Заметки живут только в памяти устройства. Удаляются при закрытии или ПАНИКЕ.",nph:"> пиши...",nc:"УДАЛИТЬ",eb:"ошибка",el:"неверная ссылка",e64:"неверный base64",tb:"ИНФО",ab_t:"[ О ПРИЛОЖЕНИИ ]",ab_d:"Prise Island создан как быстрый и простой поисковый портал без слежки и рекламы. Цель: приватный поиск, базовые инструменты приватности и честная информация в одном месте. Без аккаунта и сбора данных. Это не VPN; для настоящей защиты используй VPN или Tor.",cd_t:"[ ВВЕДИ КОД ]",cd_d:"Если есть особый код, введи его здесь.",cd_ph:"код...",cd_b:"ОТКРЫТЬ",cd_ok:"✔ Режим админа включён",cd_no:"✘ Неверный код",ad_t:"[ ПАНЕЛЬ АДМИНА ]",ad_n:"Эта панель меняет только внешний вид и настройки на твоём устройстве. Сервера нет.",ad_s:"Поисков",ad_u:"Время работы",ad_o:"ВЫЙТИ",ad_sys:"Инфо об устройстве",tadm:"АДМИН",g_ph:"введи код...",g_b:"ВОЙТИ",g_ct:"[ СОЗДАТЬ КОД ]",g_cd:"Впервые здесь? Задай свой код доступа (минимум 4 символа).",g_nph:"новый код...",g_cb:"СОЗДАТЬ",g_err:"✘ Неверный код",g_short:"✘ Минимум 4 символа",g_saved:"✔ Код сохранён",g_note:"Эта блокировка лишь скрывает экран, это не настоящая защита."}
+};
+var nl=(navigator.language||'tr').slice(0,2),lang=D[nl]?nl:'tr';
+function T(k){return D[lang][k]}
+var mode='g',recents=[],on=true,admin=false,nsearch=0,t0=Date.now(),rdelay=60;
+function showRecent(){var r=$('recent');r.textContent='';if(mode!=='n'||!recents.length)return;recents.forEach(function(t){var b=document.createElement('button');b.className='rc';b.textContent=t;b.onclick=function(){$('q').value=t;$('q').focus()};r.appendChild(b)})}
+function addRecent(q){recents=recents.filter(function(x){return x!==q});recents.unshift(q);recents=recents.slice(0,6);showRecent()}
+function setMode(m){mode=m;document.body.classList.toggle('normal',m==='n');$('mg').classList.toggle('on',m==='g');$('mn').classList.toggle('on',m==='n');$('engg').style.display=m==='g'?'':'none';$('engn').style.display=m==='n'?'':'none';$('ht').textContent=m==='g'?'DuckDuckGo':'Google';$('hp').textContent=m==='g'?T('hpg'):T('hpn');$('stat').textContent=(m==='g'?T('sg'):T('sn'))+(admin?' [ADMIN]':'');showRecent()}
+function apply(){document.documentElement.lang=lang;
+document.querySelectorAll('[data-i]').forEach(function(e){e.textContent=T(e.dataset.i)});
+document.querySelectorAll('[data-p]').forEach(function(e){e.placeholder=T(e.dataset.p)});
+$('hint').innerHTML=T('hint');$('rainbtn').textContent=on?T('rg'):T('rk');
+$('plabel').textContent=T('len')+': '+$('plen').value;$('lang2').value=lang;setMode(mode)}
+$('lang').value=lang;
+$('lang').addEventListener('change',function(){lang=this.value;apply()});
+$('mg').addEventListener('click',function(){setMode('g')});
+$('mn').addEventListener('click',function(){setMode('n')});
+/* FPS */
+var fr=0,lt=performance.now();
+function loop(t){fr++;if(t-lt>=1000){$('fps').textContent='FPS: '+Math.round(fr*1000/(t-lt));fr=0;lt=t}requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
+function tick(){$('clock').textContent=new Date().toLocaleTimeString(lang==='tr'?'tr-TR':undefined)}tick();setInterval(tick,1000);
+var txt='./prise-island --start',ti=0;
+(function ty(){if(ti<=txt.length){$('typed').textContent=txt.slice(0,ti++);setTimeout(ty,70)}})();
+document.querySelectorAll('nav button').forEach(function(b){b.addEventListener('click',function(){
+document.querySelectorAll('nav button').forEach(function(x){x.classList.remove('on')});
+document.querySelectorAll('.view').forEach(function(x){x.classList.remove('on')});
+b.classList.add('on');$(b.dataset.v).classList.add('on')})});
+/* search */
+var sc={'!d':'https://duckduckgo.com/?q=','!s':'https://www.startpage.com/do/search?q=','!b':'https://search.brave.com/search?q=','!m':'https://www.mojeek.com/search?q=','!g':'https://www.google.com/search?q=','!y':'https://yandex.com/search/?text='};
+function go(){var q=$('q').value.trim();if(!q)return;
+var base=document.querySelector(mode==='g'?'input[name=e]:checked':'input[name=n]:checked').value,p=q.slice(0,2).toLowerCase();
+if(sc[p]&&q.charAt(2)===' '){base=sc[p];q=q.slice(3).trim();if(!q)return}
+var a=document.createElement('a');a.href=base+encodeURIComponent(q);a.target='_blank';a.rel='noopener noreferrer';
+document.body.appendChild(a);a.click();a.remove();$('q').value='';nsearch++;if(mode==='n')addRecent(q)}
+$('go').addEventListener('click',go);
+$('q').addEventListener('keydown',function(e){if(e.key==='Enter')go()});
+/* panic */
+$('panic').addEventListener('click',function(){document.querySelectorAll('textarea,input[type=text]').forEach(function(e){e.value=''});$('pout').textContent='-';try{location.replace('about:blank')}catch(e){document.body.innerHTML=''}});
+/* matrix rain */
+var cv=$('rain'),cx=cv.getContext('2d'),cols=0,drops=[];
+function rs(){cv.width=innerWidth;cv.height=innerHeight;cols=Math.floor(cv.width/16);drops=[];for(var i=0;i<cols;i++)drops[i]=Math.random()*-50}
+rs();addEventListener('resize',rs);
+var ch='01アイウエオカキクケコ{}<>/$#';
+function rain(){if(on){cx.fillStyle='rgba(0,0,0,.08)';cx.fillRect(0,0,cv.width,cv.height);cx.fillStyle='#00ff41';cx.font='14px monospace';for(var i=0;i<cols;i++){cx.fillText(ch[Math.floor(Math.random()*ch.length)],i*16,drops[i]*16);if(drops[i]*16>cv.height&&Math.random()>.975)drops[i]=0;drops[i]++}}setTimeout(rain,rdelay)}
+rain();
+$('rainbtn').addEventListener('click',function(){on=!on;if(!on)cx.clearRect(0,0,cv.width,cv.height);this.textContent=on?T('rg'):T('rk')});
+/* password */
+var cs='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*-_=+?';
+function gen(){var n=+$('plen').value,a=new Uint32Array(n),lim=Math.floor(4294967296/cs.length)*cs.length,s='';
+while(s.length<n){crypto.getRandomValues(a);for(var i=0;i<n&&s.length<n;i++){if(a[i]<lim)s+=cs[a[i]%cs.length]}}
+$('pout').textContent=s}
+$('plen').addEventListener('input',function(){$('plabel').textContent=T('len')+': '+this.value;gen()});
+$('pgen').addEventListener('click',gen);gen();
+$('pcopy').addEventListener('click',function(){var b=this;try{navigator.clipboard.writeText($('pout').textContent).then(function(){b.textContent=T('cpd');setTimeout(function(){b.textContent=T('cp')},1500)},function(){})}catch(e){}});
+/* hash */
+$('hgo').addEventListener('click',function(){crypto.subtle.digest('SHA-256',new TextEncoder().encode($('hin').value)).then(function(h){$('hout').textContent=Array.from(new Uint8Array(h)).map(function(b){return b.toString(16).padStart(2,'0')}).join('')},function(){$('hout').textContent=T('eb')})});
+/* base64 */
+$('benc').addEventListener('click',function(){try{var s='';new TextEncoder().encode($('bin').value).forEach(function(c){s+=String.fromCharCode(c)});$('bout').textContent=btoa(s)}catch(e){$('bout').textContent=T('eb')}});
+$('bdec').addEventListener('click',function(){try{var s=atob($('bin').value.trim()),u=new Uint8Array(s.length);for(var i=0;i<s.length;i++)u[i]=s.charCodeAt(i);$('bout').textContent=new TextDecoder().decode(u)}catch(e){$('bout').textContent=T('e64')}});
+/* link cleaner */
+$('lgo').addEventListener('click',function(){var v=$('lin').value.trim();try{var u=new URL(v),rm=[];u.searchParams.forEach(function(_,k){if(/^(utm_|fbclid|gclid|dclid|msclkid|mc_|igshid|yclid|_ga|ref_src|si$)/i.test(k))rm.push(k)});rm.forEach(function(k){u.searchParams.delete(k)});$('lout').textContent=u.toString()}catch(e){$('lout').textContent=T('el')}});
+/* username */
+var w1=['shadow','ghost','cipher','null','void','echo','proxy','rogue','static','zero'],w2=['fox','wolf','node','byte','root','raven','pixel','vector','kernel','signal'];
+$('ugo').addEventListener('click',function(){var r=new Uint32Array(3);crypto.getRandomValues(r);$('uout').textContent=w1[r[0]%10]+'_'+w2[r[1]%10]+(r[2]%9000+1000)});
+$('nclr').addEventListener('click',function(){$('notepad').value=''});
+/* code / admin (hash compare, code is not stored in plain text) */
+var AH="22cb521fc712bd3c86ba8c27c2b942b0ac24d9c33ce285922b8712b8425bb64e";
+function sysinfo(){$('asys').textContent=screen.width+'x'+screen.height+' · '+(navigator.language||'-')+' · '+(navigator.onLine?'online':'offline')+' · '+(navigator.platform||'-')}
+function hx(b){return Array.from(new Uint8Array(b)).map(function(c){return c.toString(16).padStart(2,'0')}).join('')}
+function sha(s){return crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)).then(hx)}
+function lsG(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsS(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function showView(id){document.querySelectorAll('nav button').forEach(function(x){x.classList.toggle('on',x.dataset.v===id)});document.querySelectorAll('.view').forEach(function(x){x.classList.toggle('on',x.id===id)})}
+function enter(isAdm){$('gate').style.display='none';admin=!!isAdm;$('admtab').style.display=admin?'':'none';if(admin)sysinfo();setMode(mode)}
+function lockApp(){admin=false;$('admtab').style.display='none';showView('search');$('gate').style.display='flex';$('gmsg').textContent='';setMode(mode)}
+function login(){var v=$('gcode').value;$('gcode').value='';if(!v)return;
+sha(v).then(function(x){if(x===AH){enter(true);return}
+var s=lsG('pi_s'),h=lsG('pi_h');if(!s||!h){$('gmsg').textContent=T('g_err');return}
+sha(s+v).then(function(y){if(y===h)enter(false);else $('gmsg').textContent=T('g_err')})})}
+function mk(){var v=$('ncode').value;if(v.length<4){$('gmsg').textContent=T('g_short');return}$('ncode').value='';
+var a=new Uint8Array(16);crypto.getRandomValues(a);var s=hx(a);
+sha(s+v).then(function(h){lsS('pi_s',s);lsS('pi_h',h);$('gmsg').textContent=T('g_saved');setTimeout(function(){enter(false)},500)})}
+$('gbtn').addEventListener('click',login);
+$('gcode').addEventListener('keydown',function(e){if(e.key==='Enter')login()});
+$('gnew').addEventListener('click',mk);
+$('ncode').addEventListener('keydown',function(e){if(e.key==='Enter')mk()});
+$('lockbtn').addEventListener('click',lockApp);
+$('lang2').addEventListener('change',function(){lang=this.value;$('lang').value=lang;apply()});
+$('glogo').innerHTML=document.querySelector('header svg').outerHTML;
+setInterval(function(){if(admin){$('ast').textContent=nsearch;$('aup').textContent=Math.floor((Date.now()-t0)/1000)}},1000);
+$('tfps').addEventListener('click',function(){var f=$('fps');f.style.display=f.style.display==='none'?'':'none'});
+var sl=true;$('tscan').addEventListener('click',function(){sl=!sl;document.body.classList.toggle('noscan',!sl)});
+$('tspd').addEventListener('click',function(){rdelay=rdelay===60?25:60});
+$('alock').addEventListener('click',lockApp);
+apply();
+if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
+</script>
+</body>
+</html>
